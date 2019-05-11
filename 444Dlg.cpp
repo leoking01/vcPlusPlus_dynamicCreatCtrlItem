@@ -19,13 +19,13 @@ class CAboutDlg : public CDialogEx
 public:
 	CAboutDlg();
 
-// 对话框数据
+	// 对话框数据
 	enum { IDD = IDD_ABOUTBOX };
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
-// 实现
+	// 实现
 protected:
 	DECLARE_MESSAGE_MAP()
 };
@@ -65,6 +65,7 @@ BEGIN_MESSAGE_MAP(CMy444Dlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDOK, &CMy444Dlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMy444Dlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CMy444Dlg::OnBnClickedButton2_releaseButton_dynanic)
 END_MESSAGE_MAP()
 
 
@@ -126,7 +127,6 @@ void CMy444Dlg::OnPaint()
 	if (IsIconic())
 	{
 		CPaintDC dc(this); // 用于绘制的设备上下文
-
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
 		// 使图标在工作区矩形中居中
@@ -158,11 +158,6 @@ HCURSOR CMy444Dlg::OnQueryDragIcon()
 void CMy444Dlg::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码
-
-
-
-
-
 	CDialogEx::OnOK();
 }
 
@@ -170,30 +165,34 @@ void CMy444Dlg::OnBnClickedOk()
 void CMy444Dlg::OnBnClickedButton1()
 {
 	// TODO: 在此添加控件通知处理程序代码
-CButton* pNewButton = new CButton();// 也可以定义为类的成员变量。
- CRect rcButton( 10, 10, 50, 30); // 按钮在对话框中的位置。
- pNewButton->Create("按钮", 0, rcButton, this, 10098);
- pNewButton->ShowWindow(SW_SHOW);
-
-
-
-
+	this->pNewButton = new CButton();// 也可以定义为类的成员变量。
+	CRect rcButton( 10, 10, 50, 30); // 按钮在对话框中的位置。
+	pNewButton->Create("按钮", 0, rcButton, this, 10098);
+	pNewButton->ShowWindow(SW_SHOW);
 }
 
 LRESULT CMy444Dlg::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
 {
- // TODO: Add your specialized code here and/or call the base class
- if ( WM_COMMAND== message )
- {
-  WORD wID = LOWORD(wParam);
-  if ( 10098 == wID)
-  {
-   CDC* pDC = GetDC();
-   pDC->TextOut( 100, 100, "文字");
-   ReleaseDC(pDC);
-  }
-    }
- return CDialogEx::DefWindowProc(message, wParam, lParam);
+	// TODO: Add your specialized code here and/or call the base class
+	if ( WM_COMMAND== message )
+	{
+		WORD wID = LOWORD(wParam);
+		if ( 10098 == wID)
+		{
+			CDC* pDC = GetDC();
+			pDC->TextOut( 100, 100, "文字");
+			ReleaseDC(pDC);
+		}
+	}
+	return CDialogEx::DefWindowProc(message, wParam, lParam);
 }
 
 
+
+
+void CMy444Dlg::OnBnClickedButton2_releaseButton_dynanic()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	this->pNewButton->DestroyWindow();
+	//this->pNewButton->->InternalRelease();
+}
